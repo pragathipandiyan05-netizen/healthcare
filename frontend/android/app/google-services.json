@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "826174653106",
+    "firebase_url": "https://healthcare-b2d3f-default-rtdb.firebaseio.com",
+    "project_id": "healthcare-b2d3f",
+    "storage_bucket": "healthcare-b2d3f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:826174653106:android:e67b33db29485d93f9ffab",
+        "android_client_info": {
+          "package_name": "com.example.frontend"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_idmYGHvU4pWZLgQYTXVM78hkHdGiUIg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
