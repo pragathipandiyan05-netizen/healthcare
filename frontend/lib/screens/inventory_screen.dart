@@ -50,7 +50,7 @@ class InventoryScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text('Paracetamol 500mg', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+                        const Text('Paracetamol 500mg', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22)),
                         const Text('Category: Medicines | Hospital: GH Chennai'),
                         const Text('Qty: 5000 | Min Threshold: 1000'),
                         const Text('Expiry: Dec 2026'),
@@ -81,8 +81,8 @@ class InventoryScreen extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            Text(value, style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold, color: color)),
-            Text(title, textAlign: TextAlign.center, style: const TextStyle(fontSize: 14)),
+            Text(value, style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: color)),
+            Text(title, textAlign: TextAlign.center, style: const TextStyle(fontSize: 18)),
           ],
         ),
       ),

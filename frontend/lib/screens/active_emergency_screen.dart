@@ -113,7 +113,7 @@ class _ActiveEmergencyScreenState extends State<ActiveEmergencyScreen> with Sing
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text('SOS Emergency', style: TextStyle(color: Colors.white, fontSize: 20)),
+        title: const Text('SOS Emergency', style: TextStyle(color: Colors.white, fontSize: 24)),
         backgroundColor: primaryBlue,
         iconTheme: const IconThemeData(color: Colors.white),
         elevation: 0,
@@ -167,8 +167,8 @@ class _ActiveEmergencyScreenState extends State<ActiveEmergencyScreen> with Sing
                             children: const [
                               Icon(Icons.health_and_safety, color: Colors.white, size: 40),
                               SizedBox(height: 4),
-                              Text('SOS', style: TextStyle(color: Colors.white, fontSize: 42, fontWeight: FontWeight.bold, letterSpacing: 2)),
-                              Text('Tap to Alert', style: TextStyle(color: Colors.white, fontSize: 16)),
+                              Text('SOS', style: TextStyle(color: Colors.white, fontSize: 46, fontWeight: FontWeight.bold, letterSpacing: 2)),
+                              Text('Tap to Alert', style: TextStyle(color: Colors.white, fontSize: 20)),
                             ],
                           ),
                         ),
@@ -181,11 +181,11 @@ class _ActiveEmergencyScreenState extends State<ActiveEmergencyScreen> with Sing
               const SizedBox(height: 48),
               
               // Location info
-              const Text('Your Location', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.black87)),
+              const Text('Your Location', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22, color: Colors.black87)),
               const SizedBox(height: 8),
               Text(
                 locationText,
-                style: const TextStyle(fontSize: 16, color: Colors.black54, height: 1.5),
+                style: const TextStyle(fontSize: 20, color: Colors.black54, height: 1.5),
               ),
               
               const Spacer(),
@@ -203,7 +203,7 @@ class _ActiveEmergencyScreenState extends State<ActiveEmergencyScreen> with Sing
                     ? const CircularProgressIndicator(color: Colors.white)
                     : Text(
                         alertId.isEmpty ? 'SEND SOS ALERT' : 'ALERT ACTIVE',
-                        style: const TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),
+                        style: const TextStyle(fontSize: 22, color: Colors.white, fontWeight: FontWeight.bold),
                       ),
               ),
               
@@ -212,7 +212,7 @@ class _ActiveEmergencyScreenState extends State<ActiveEmergencyScreen> with Sing
               Text(
                 statusMessage,
                 textAlign: TextAlign.center,
-                style: const TextStyle(color: Colors.black54, fontSize: 15),
+                style: const TextStyle(color: Colors.black54, fontSize: 19),
               ),
               const SizedBox(height: 16),
             ],

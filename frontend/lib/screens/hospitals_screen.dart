@@ -57,8 +57,8 @@ class HospitalsScreen extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            Text(value, style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold, color: color)),
-            Text(title, textAlign: TextAlign.center, style: const TextStyle(fontSize: 14)),
+            Text(value, style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: color)),
+            Text(title, textAlign: TextAlign.center, style: const TextStyle(fontSize: 18)),
           ],
         ),
       ),

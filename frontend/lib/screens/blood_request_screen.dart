@@ -17,7 +17,7 @@ class _BloodRequestScreenState extends State<BloodRequestScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text('Blood Request', style: TextStyle(color: Colors.white, fontSize: 20)),
+        title: const Text('Blood Request', style: TextStyle(color: Colors.white, fontSize: 24)),
         backgroundColor: primaryBlue,
         iconTheme: const IconThemeData(color: Colors.white),
         elevation: 0,
@@ -67,7 +67,7 @@ class _BloodRequestScreenState extends State<BloodRequestScreen> {
                   backgroundColor: primaryBlue,
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                 ),
-                child: const Text('SUBMIT REQUEST', style: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold)),
+                child: const Text('SUBMIT REQUEST', style: TextStyle(fontSize: 22, color: Colors.white, fontWeight: FontWeight.bold)),
               ),
               const SizedBox(height: 20),
             ],
@@ -80,7 +80,7 @@ class _BloodRequestScreenState extends State<BloodRequestScreen> {
   Widget _buildLabel(String text) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0),
-      child: Text(text, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 15, color: Colors.black54)),
+      child: Text(text, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 19, color: Colors.black54)),
     );
   }
 
@@ -96,7 +96,7 @@ class _BloodRequestScreenState extends State<BloodRequestScreen> {
           value: value,
           isExpanded: true,
           icon: const Icon(Icons.keyboard_arrow_down, color: Colors.black54),
-          items: items.map((i) => DropdownMenuItem(value: i, child: Text(i, style: const TextStyle(fontSize: 17)))).toList(),
+          items: items.map((i) => DropdownMenuItem(value: i, child: Text(i, style: const TextStyle(fontSize: 21)))).toList(),
           onChanged: (val) {},
         ),
       ),
@@ -107,7 +107,7 @@ class _BloodRequestScreenState extends State<BloodRequestScreen> {
     return TextFormField(
       initialValue: initialValue,
       maxLines: maxLines,
-      style: const TextStyle(fontSize: 17),
+      style: const TextStyle(fontSize: 21),
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         border: OutlineInputBorder(
@@ -144,7 +144,7 @@ class _BloodRequestScreenState extends State<BloodRequestScreen> {
               style: TextStyle(
                 color: isSelected ? Colors.white : Colors.black87, 
                 fontWeight: FontWeight.w600,
-                fontSize: 16
+                fontSize: 20
               )
             ),
           ),

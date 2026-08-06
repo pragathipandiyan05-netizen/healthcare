@@ -81,7 +81,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               'CARE ALERT',
               style: TextStyle(
                 color: Color(0xFF042e6f),
-                fontSize: 20,
+                fontSize: 24,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -113,7 +113,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             child: const Icon(Icons.shield, color: Colors.red, size: 28),
                           ),
                           const SizedBox(width: 12),
-                          const Text('CARE ALERT', style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)),
+                          const Text('CARE ALERT', style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold)),
                         ],
                       ),
                     ),
@@ -216,11 +216,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: const [
-                        Text('Welcome', style: TextStyle(color: Colors.white70, fontSize: 14)),
+                        Text('Welcome', style: TextStyle(color: Colors.white70, fontSize: 18)),
                         SizedBox(height: 2),
-                        Text('Dr. Kavitha R', style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)),
+                        Text('Dr. Kavitha R', style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold)),
                         SizedBox(height: 2),
-                        Text('Government Hospital, Chennai', style: TextStyle(color: Colors.white70, fontSize: 14)),
+                        Text('Government Hospital, Chennai', style: TextStyle(color: Colors.white70, fontSize: 18)),
                       ],
                     ),
                   ),
@@ -258,8 +258,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           children: const [
                             Icon(Icons.health_and_safety, color: Colors.white, size: 40),
                             SizedBox(height: 8),
-                            Text('SOS', style: TextStyle(color: Colors.white, fontSize: 34, fontWeight: FontWeight.bold, letterSpacing: 2)),
-                            Text('Emergency\nHelp', textAlign: TextAlign.center, style: TextStyle(color: Colors.white, fontSize: 14)),
+                            Text('SOS', style: TextStyle(color: Colors.white, fontSize: 38, fontWeight: FontWeight.bold, letterSpacing: 2)),
+                            Text('Emergency\nHelp', textAlign: TextAlign.center, style: TextStyle(color: Colors.white, fontSize: 18)),
                           ],
                         ),
                       ),
@@ -267,7 +267,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   ),
                   const SizedBox(height: 32),
 
-                  const Text('Quick Actions', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black87)),
+                  const Text('Quick Actions', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black87)),
                   const SizedBox(height: 16),
                   
                   // Grid of Actions
@@ -287,7 +287,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   ),
 
                   const SizedBox(height: 32),
-                  const Text('Dashboard Summary', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black87)),
+                  const Text('Dashboard Summary', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black87)),
                   const SizedBox(height: 16),
                   Row(
                     children: [
@@ -306,7 +306,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   ),
 
                   const SizedBox(height: 32),
-                  const Text('Recent Activity', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black87)),
+                  const Text('Recent Activity', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black87)),
                   const SizedBox(height: 16),
                   _buildActivityItem('Blood Request (O+)', 'Resolved', '2 hrs ago', Icons.check_circle, Colors.green),
                   _buildActivityItem('Equipment Fault (MRI)', 'Pending', '5 hrs ago', Icons.pending, Colors.orange),
@@ -331,9 +331,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(count, style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold, color: color)),
+          Text(count, style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: color)),
           const SizedBox(height: 4),
-          Text(title, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.black87)),
+          Text(title, style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: Colors.black87)),
         ],
       ),
     );
@@ -346,8 +346,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
         backgroundColor: color.withValues(alpha: 0.1),
         child: Icon(icon, color: color),
       ),
-      title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-      subtitle: Text('$status • $time', style: TextStyle(color: Colors.grey.shade600, fontSize: 14)),
+      title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+      subtitle: Text('$status • $time', style: TextStyle(color: Colors.grey.shade600, fontSize: 18)),
     );
   }
 
@@ -429,12 +429,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
-                      Text('$hospital • $dept', style: TextStyle(color: Colors.grey.shade600, fontSize: 14)),
+                      Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 22)),
+                      Text('$hospital • $dept', style: TextStyle(color: Colors.grey.shade600, fontSize: 18)),
                     ],
                   ),
                 ),
-                Text(time, style: TextStyle(color: Colors.grey.shade500, fontSize: 14)),
+                Text(time, style: TextStyle(color: Colors.grey.shade500, fontSize: 18)),
               ],
             ),
             const SizedBox(height: 16),
@@ -463,7 +463,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(color: color.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(8), border: Border.all(color: color.withValues(alpha: 0.5))),
-      child: Text(text, style: TextStyle(color: color, fontSize: 12, fontWeight: FontWeight.bold)),
+      child: Text(text, style: TextStyle(color: color, fontSize: 16, fontWeight: FontWeight.bold)),
     );
   }
 
@@ -482,8 +482,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   child: Icon(Icons.person, size: 50, color: Colors.white),
                 ),
                 const SizedBox(height: 16),
-                const Text('Dr. Kavitha R', style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold)),
-                Text('EMP-001 • Chief Medical Officer', style: TextStyle(fontSize: 16, color: Colors.grey.shade600)),
+                const Text('Dr. Kavitha R', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+                Text('EMP-001 • Chief Medical Officer', style: TextStyle(fontSize: 20, color: Colors.grey.shade600)),
               ],
             ),
           ),
@@ -508,7 +508,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ),
           const SizedBox(height: 32),
           
-          const Text('Settings', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black87)),
+          const Text('Settings', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black87)),
           const SizedBox(height: 8),
           _buildSettingsTile(Icons.edit, 'Edit Profile'),
           _buildSettingsTile(Icons.language, 'Language (English / தமிழ்)'),
@@ -533,8 +533,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(width: 100, child: Text(label, style: TextStyle(color: Colors.grey.shade600, fontSize: 16))),
-          Expanded(child: Text(value, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16))),
+          SizedBox(width: 100, child: Text(label, style: TextStyle(color: Colors.grey.shade600, fontSize: 20))),
+          Expanded(child: Text(value, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20))),
         ],
       ),
     );
@@ -576,7 +576,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             Text(
               label,
               textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.black87),
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: Colors.black87),
             ),
           ],
         ),
