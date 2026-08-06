@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'active_emergency_screen.dart';
 import 'drug_shortage_screen.dart';
 import 'blood_request_screen.dart';
@@ -8,6 +9,7 @@ import 'inventory_screen.dart';
 import 'blood_bank_screen.dart';
 import 'analytics_screen.dart';
 import 'reports_screen.dart';
+import 'login_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
   @override
@@ -68,57 +70,80 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ),
       ),
       drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
+        child: Column(
           children: [
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
-              decoration: const BoxDecoration(
-                color: Color(0xFF042e6f),
-              ),
-              child: SafeArea(
-                bottom: false,
-                child: Row(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(4),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: const Icon(Icons.shield, color: Colors.red, size: 28),
+            Expanded(
+              child: ListView(
+                padding: EdgeInsets.zero,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
+                    decoration: const BoxDecoration(
+                      color: Color(0xFF042e6f),
                     ),
-                    const SizedBox(width: 12),
-                    const Text('CARE ALERT', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)),
-                  ],
-                ),
+                    child: SafeArea(
+                      bottom: false,
+                      child: Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(4),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: const Icon(Icons.shield, color: Colors.red, size: 28),
+                          ),
+                          const SizedBox(width: 12),
+                          const Text('CARE ALERT', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)),
+                        ],
+                      ),
+                    ),
+                  ),
+                  ListTile(leading: const Icon(Icons.home, color: Color(0xFF042e6f)), title: const Text('Home', style: TextStyle(fontWeight: FontWeight.bold)), onTap: () {}),
+                  ListTile(leading: const Icon(Icons.notifications), title: const Text('Alerts'), onTap: () {
+                    Navigator.pop(context);
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => AlertsScreen()));
+                  }),
+                  ListTile(leading: const Icon(Icons.local_hospital), title: const Text('Hospitals'), onTap: () {
+                    Navigator.pop(context);
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => HospitalsScreen()));
+                  }),
+                  ListTile(leading: const Icon(Icons.medical_services), title: const Text('Inventory'), onTap: () {
+                    Navigator.pop(context);
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => InventoryScreen()));
+                  }),
+                  ListTile(leading: const Icon(Icons.bloodtype), title: const Text('Blood'), onTap: () {
+                    Navigator.pop(context);
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => BloodBankScreen()));
+                  }),
+                  ListTile(leading: const Icon(Icons.analytics), title: const Text('Analytics'), onTap: () {
+                    Navigator.pop(context);
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => AnalyticsScreen()));
+                  }),
+                  ListTile(leading: const Icon(Icons.assignment), title: const Text('Reports'), onTap: () {
+                    Navigator.pop(context);
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => ReportsScreen()));
+                  }),
+                ],
               ),
             ),
-            ListTile(leading: const Icon(Icons.home, color: Color(0xFF042e6f)), title: const Text('Home', style: TextStyle(fontWeight: FontWeight.bold)), onTap: () {}),
-            ListTile(leading: const Icon(Icons.notifications), title: const Text('Alerts'), onTap: () {
-              Navigator.pop(context);
-              Navigator.push(context, MaterialPageRoute(builder: (context) => AlertsScreen()));
-            }),
-            ListTile(leading: const Icon(Icons.local_hospital), title: const Text('Hospitals'), onTap: () {
-              Navigator.pop(context);
-              Navigator.push(context, MaterialPageRoute(builder: (context) => HospitalsScreen()));
-            }),
-            ListTile(leading: const Icon(Icons.medical_services), title: const Text('Inventory'), onTap: () {
-              Navigator.pop(context);
-              Navigator.push(context, MaterialPageRoute(builder: (context) => InventoryScreen()));
-            }),
-            ListTile(leading: const Icon(Icons.bloodtype), title: const Text('Blood'), onTap: () {
-              Navigator.pop(context);
-              Navigator.push(context, MaterialPageRoute(builder: (context) => BloodBankScreen()));
-            }),
-            ListTile(leading: const Icon(Icons.analytics), title: const Text('Analytics'), onTap: () {
-              Navigator.pop(context);
-              Navigator.push(context, MaterialPageRoute(builder: (context) => AnalyticsScreen()));
-            }),
-            ListTile(leading: const Icon(Icons.assignment), title: const Text('Reports'), onTap: () {
-              Navigator.pop(context);
-              Navigator.push(context, MaterialPageRoute(builder: (context) => ReportsScreen()));
-            }),
+            const Divider(height: 1),
+            SafeArea(
+              top: false,
+              child: ListTile(
+                leading: const Icon(Icons.logout, color: Colors.red),
+                title: const Text('Logout', style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold)),
+                onTap: () async {
+                  final prefs = await SharedPreferences.getInstance();
+                  await prefs.clear();
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginScreen()),
+                    (route) => false,
+                  );
+                },
+              ),
+            ),
           ],
         ),
       ),
