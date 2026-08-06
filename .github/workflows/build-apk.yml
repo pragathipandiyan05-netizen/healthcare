@@ -28,6 +28,16 @@ jobs:
         working-directory: ./frontend
         run: flutter pub get
 
+      - name: Patch telephony plugin
+        run: |
+          TELEPHONY_DIR=ind ~/.pub-cache/hosted/pub.dev/ -name "telephony-0.2.0"
+          if [ -d "$TELEPHONY_DIR" ]; then
+            echo "Patching telephony plugin"
+            sed -i 's/jvmTarget = '\''1.8'\''/jvmTarget = '\''11'\''/g' $TELEPHONY_DIR/android/build.gradle
+            echo "kotlinOptions { jvmTarget = '11' }" >> $TELEPHONY_DIR/android/build.gradle
+          fi
+        shell: bash
+
       - name: Build APK
         working-directory: ./frontend
         run: flutter build apk --release
