@@ -29,18 +29,8 @@ jobs:
         run: flutter pub get
 
       - name: Patch telephony plugin
-        run: |
-          # Use find to locate the telephony build.gradle file
-          TELEPHONY_GRADLE=$(find ~/.pub-cache/hosted/pub.dev/ -path "*/telephony-*/android/build.gradle" | head -n 1)
-          if [ -f "$TELEPHONY_GRADLE" ]; then
-            echo "Patching $TELEPHONY_GRADLE"
-            # Add kotlinOptions { jvmTarget = '11' } to the end of the file
-            echo "" >> "$TELEPHONY_GRADLE"
-            echo "kotlinOptions { jvmTarget = '11' }" >> "$TELEPHONY_GRADLE"
-          else
-            echo "telephony build.gradle not found"
-          fi
-        shell: bash
+        working-directory: ./frontend
+        run: python patch_plugin.py
       - name: Build APK
         working-directory: ./frontend
         run: flutter build apk --release
