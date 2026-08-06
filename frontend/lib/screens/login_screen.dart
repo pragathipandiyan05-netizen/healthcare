@@ -3,15 +3,17 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dashboard_screen.dart';
 
 class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _staffIdController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool isEnglish = true;
-  bool? _obscurePassword = true;
+  bool _obscurePassword = true;
 
   void _login() async {
     if (_staffIdController.text.trim() == 'staff@gmail.com' && _passwordController.text == 'password') {
@@ -20,6 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
           'staff_id', _staffIdController.text.isNotEmpty ? _staffIdController.text : 'STAFF-1234');
       await prefs.setString('role', 'Staff (Doctor/Nurse)');
 
+      if (!mounted) return;
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => DashboardScreen()),
@@ -37,35 +40,43 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     const Color primaryBlue = Color(0xFF042e6f);
+    final bool isKeyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
 
     return Scaffold(
       backgroundColor: primaryBlue,
       body: SafeArea(
         child: Column(
           children: [
-            // Fixed Blue Header (Stable, never scrolls)
-            Container(
+            // Blue Header (Collapses when keyboard opens to remain stable and avoid panning)
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeInOut,
               width: double.infinity,
-              padding: const EdgeInsets.only(top: 16, bottom: 24),
+              padding: EdgeInsets.only(
+                top: isKeyboardOpen ? 8 : 16,
+                bottom: isKeyboardOpen ? 8 : 24,
+              ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  // Mock Logo
-                  Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      Icon(Icons.shield, size: 80, color: Colors.white),
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Container(width: 20, height: 32, color: primaryBlue),
-                          Container(width: 20, height: 32, color: Colors.red),
-                        ],
-                      ),
-                      Icon(Icons.pets, size: 32, color: Colors.white), // Mocking the horse/dog figure
-                    ],
-                  ),
-                  const SizedBox(height: 12),
+                  if (!isKeyboardOpen) ...[
+                    // Mock Logo
+                    Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        const Icon(Icons.shield, size: 80, color: Colors.white),
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Container(width: 20, height: 32, color: primaryBlue),
+                            Container(width: 20, height: 32, color: Colors.red),
+                          ],
+                        ),
+                        const Icon(Icons.pets, size: 32, color: Colors.white),
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+                  ],
                   const Text(
                     'CARE ALERT',
                     textAlign: TextAlign.center,
@@ -86,7 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       letterSpacing: 2,
                     ),
                   ),
-                  const SizedBox(height: 24),
+                  SizedBox(height: isKeyboardOpen ? 12 : 24),
                   // Language Toggle
                   Container(
                     decoration: BoxDecoration(
@@ -101,7 +112,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: Container(
                             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
                             decoration: BoxDecoration(
-                              color: !isEnglish ? Colors.white.withOpacity(0.2) : Colors.transparent,
+                              color: !isEnglish ? Colors.white.withValues(alpha: 0.2) : Colors.transparent,
                               borderRadius: BorderRadius.circular(30),
                             ),
                             child: const Text(
@@ -115,7 +126,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: Container(
                             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
                             decoration: BoxDecoration(
-                              color: isEnglish ? Colors.white.withOpacity(0.2) : Colors.transparent,
+                              color: isEnglish ? Colors.white.withValues(alpha: 0.2) : Colors.transparent,
                               borderRadius: BorderRadius.circular(30),
                             ),
                             child: const Text(
@@ -160,19 +171,22 @@ class _LoginScreenState extends State<LoginScreen> {
                       const SizedBox(height: 16),
                       TextField(
                         controller: _passwordController,
-                        obscureText: _obscurePassword ?? true,
+                        obscureText: _obscurePassword,
                         decoration: InputDecoration(
                           labelText: 'Password',
-                          suffixIcon: IconButton(
-                            icon: Icon(
-                              (_obscurePassword ?? true) ? Icons.visibility_off : Icons.visibility,
-                              color: Colors.grey,
-                            ),
-                            onPressed: () {
+                          suffixIcon: GestureDetector(
+                            onTap: () {
                               setState(() {
-                                _obscurePassword = !(_obscurePassword ?? true);
+                                _obscurePassword = !_obscurePassword;
                               });
                             },
+                            child: Container(
+                              color: Colors.transparent, // Ensures the tap area covers the icon cleanly
+                              child: Icon(
+                                _obscurePassword ? Icons.visibility_off : Icons.visibility,
+                                color: Colors.grey,
+                              ),
+                            ),
                           ),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),

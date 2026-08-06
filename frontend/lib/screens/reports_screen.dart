@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class ReportsScreen extends StatelessWidget {
-  final List<String> categories = ['SOS', 'Drug Shortage', 'Blood Request', 'Equipment Failure', 'Facility Hazard', 'Maintenance', 'General Incident'];
+  final List<String> categories = const ['SOS', 'Drug Shortage', 'Blood Request', 'Equipment Failure', 'Facility Hazard', 'Maintenance', 'General Incident'];
+
+  const ReportsScreen({super.key});
   
   @override
   Widget build(BuildContext context) {

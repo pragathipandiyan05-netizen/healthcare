@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 class BloodBankScreen extends StatelessWidget {
-  final List<String> bloodGroups = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
-  final List<String> components = ['Whole Blood', 'PRBC', 'Platelets', 'Plasma'];
+  final List<String> bloodGroups = const ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
+  final List<String> components = const ['Whole Blood', 'PRBC', 'Platelets', 'Plasma'];
+
+  const BloodBankScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

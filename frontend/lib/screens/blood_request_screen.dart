@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 class BloodRequestScreen extends StatefulWidget {
+  const BloodRequestScreen({super.key});
+
   @override
-  _BloodRequestScreenState createState() => _BloodRequestScreenState();
+  State<BloodRequestScreen> createState() => _BloodRequestScreenState();
 }
 
 class _BloodRequestScreenState extends State<BloodRequestScreen> {

@@ -10,10 +10,14 @@ import 'blood_bank_screen.dart';
 import 'analytics_screen.dart';
 import 'reports_screen.dart';
 import 'login_screen.dart';
+import 'equipment_fault_screen.dart';
+import 'facility_hazard_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
+  const DashboardScreen({super.key});
+
   @override
-  _DashboardScreenState createState() => _DashboardScreenState();
+  State<DashboardScreen> createState() => _DashboardScreenState();
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
@@ -41,6 +45,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => BloodRequestScreen()),
+    );
+  }
+
+  void showEquipmentFault(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => EquipmentFaultScreen()),
+    );
+  }
+
+  void showFacilityHazard(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => FacilityHazardScreen()),
     );
   }
 
@@ -136,6 +154,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 onTap: () async {
                   final prefs = await SharedPreferences.getInstance();
                   await prefs.clear();
+                  if (!context.mounted) return;
                   Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(builder: (context) => LoginScreen()),
@@ -230,7 +249,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           color: Colors.red,
                           shape: BoxShape.circle,
                           boxShadow: [
-                            BoxShadow(color: Colors.red.withOpacity(0.3), blurRadius: 20, spreadRadius: 5),
+                            BoxShadow(color: Colors.red.withValues(alpha: 0.3), blurRadius: 20, spreadRadius: 5),
                           ],
                         ),
                         child: Column(
@@ -261,8 +280,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     children: [
                       _buildGridItem(Icons.medication_liquid, 'Drug/Consumable\nShortage', Colors.blue, Colors.blue.shade50, () => showShortage(context)),
                       _buildGridItem(Icons.bloodtype, 'Blood\nRequest', Colors.red, Colors.red.shade50, () => showBloodRequest(context)),
-                      _buildGridItem(Icons.build, 'Equipment\nFault', Colors.blue, Colors.blue.shade50, () {}),
-                      _buildGridItem(Icons.warning_amber_rounded, 'Facility\nHazard', Colors.orange, Colors.orange.shade50, () {}),
+                      _buildGridItem(Icons.build, 'Equipment\nFault', Colors.blue, Colors.blue.shade50, () => showEquipmentFault(context)),
+                      _buildGridItem(Icons.warning_amber_rounded, 'Facility\nHazard', Colors.orange, Colors.orange.shade50, () => showFacilityHazard(context)),
                     ],
                   ),
 
@@ -304,9 +323,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: color.withOpacity(0.3)),
+        border: Border.all(color: color.withValues(alpha: 0.3)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -323,7 +342,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return ListTile(
       contentPadding: EdgeInsets.zero,
       leading: CircleAvatar(
-        backgroundColor: color.withOpacity(0.1),
+        backgroundColor: color.withValues(alpha: 0.1),
         child: Icon(icon, color: color),
       ),
       title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
@@ -402,7 +421,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           children: [
             Row(
               children: [
-                CircleAvatar(backgroundColor: color.withOpacity(0.1), child: Icon(icon, color: color)),
+                CircleAvatar(backgroundColor: color.withValues(alpha: 0.1), child: Icon(icon, color: color)),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Column(
@@ -441,7 +460,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget _buildBadge(String text, Color color) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(color: color.withOpacity(0.1), borderRadius: BorderRadius.circular(8), border: Border.all(color: color.withOpacity(0.5))),
+      decoration: BoxDecoration(color: color.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(8), border: Border.all(color: color.withValues(alpha: 0.5))),
       child: Text(text, style: TextStyle(color: color, fontSize: 10, fontWeight: FontWeight.bold)),
     );
   }
@@ -537,7 +556,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           borderRadius: BorderRadius.circular(16),
           border: Border.all(color: Colors.grey.shade200),
           boxShadow: [
-            BoxShadow(color: Colors.black.withOpacity(0.02), blurRadius: 4, spreadRadius: 1),
+            BoxShadow(color: Colors.black.withValues(alpha: 0.02), blurRadius: 4, spreadRadius: 1),
           ],
         ),
         child: Column(

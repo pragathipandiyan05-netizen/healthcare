@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class InventoryScreen extends StatelessWidget {
-  final List<String> categories = ['Medicines', 'Consumables', 'PPE Kits', 'Oxygen Cylinders', 'IV Fluids', 'Surgical Supplies'];
+  final List<String> categories = const ['Medicines', 'Consumables', 'PPE Kits', 'Oxygen Cylinders', 'IV Fluids', 'Surgical Supplies'];
+
+  const InventoryScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

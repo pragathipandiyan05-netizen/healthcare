@@ -5,14 +5,17 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'login_screen.dart';
 
 class AdminDashboard extends StatefulWidget {
+  const AdminDashboard({super.key});
+
   @override
-  _AdminDashboardState createState() => _AdminDashboardState();
+  State<AdminDashboard> createState() => _AdminDashboardState();
 }
 
 class _AdminDashboardState extends State<AdminDashboard> {
   void _logout() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.clear();
+    if (!mounted) return;
     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen()));
   }
 

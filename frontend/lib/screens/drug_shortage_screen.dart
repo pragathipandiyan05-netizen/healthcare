@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 class DrugShortageScreen extends StatefulWidget {
+  const DrugShortageScreen({super.key});
+
   @override
-  _DrugShortageScreenState createState() => _DrugShortageScreenState();
+  State<DrugShortageScreen> createState() => _DrugShortageScreenState();
 }
 
 class _DrugShortageScreenState extends State<DrugShortageScreen> {

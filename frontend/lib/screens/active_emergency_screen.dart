@@ -10,14 +10,14 @@ class ActiveEmergencyScreen extends StatefulWidget {
   final String staffId;
 
   const ActiveEmergencyScreen({
-    Key? key,
+    super.key,
     required this.distressType,
     required this.isTimerActive,
     required this.staffId,
-  }) : super(key: key);
+  });
 
   @override
-  _ActiveEmergencyScreenState createState() => _ActiveEmergencyScreenState();
+  State<ActiveEmergencyScreen> createState() => _ActiveEmergencyScreenState();
 }
 
 class _ActiveEmergencyScreenState extends State<ActiveEmergencyScreen> with SingleTickerProviderStateMixin {
@@ -45,6 +45,7 @@ class _ActiveEmergencyScreenState extends State<ActiveEmergencyScreen> with Sing
     }
     await Permission.location.request();
     try {
+      // ignore: deprecated_member_use
       Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
       setState(() {
         locationText = "Govt. Hospital, Chennai\nLat: ${position.latitude.toStringAsFixed(4)}  Long: ${position.longitude.toStringAsFixed(4)}";
@@ -73,6 +74,7 @@ class _ActiveEmergencyScreenState extends State<ActiveEmergencyScreen> with Sing
     }
 
     try {
+      // ignore: deprecated_member_use
       Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
       DocumentReference docRef = await FirebaseFirestore.instance.collection('care_alerts').add({
         'staff_id': widget.staffId,
@@ -137,7 +139,7 @@ class _ActiveEmergencyScreenState extends State<ActiveEmergencyScreen> with Sing
                           height: 250 + (_pulseController.value * 30),
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: Colors.red.withOpacity(0.15 - (_pulseController.value * 0.15)),
+                            color: Colors.red.withValues(alpha: 0.15 - (_pulseController.value * 0.15)),
                           ),
                         ),
                         // Inner ring
@@ -146,7 +148,7 @@ class _ActiveEmergencyScreenState extends State<ActiveEmergencyScreen> with Sing
                           height: 220,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: Colors.red.withOpacity(0.2),
+                            color: Colors.red.withValues(alpha: 0.2),
                           ),
                         ),
                         // Main button
@@ -157,7 +159,7 @@ class _ActiveEmergencyScreenState extends State<ActiveEmergencyScreen> with Sing
                             shape: BoxShape.circle,
                             color: const Color(0xFFE53935), // Red
                             boxShadow: [
-                              BoxShadow(color: Colors.red.withOpacity(0.4), blurRadius: 15, spreadRadius: 5),
+                              BoxShadow(color: Colors.red.withValues(alpha: 0.4), blurRadius: 15, spreadRadius: 5),
                             ],
                           ),
                           child: Column(

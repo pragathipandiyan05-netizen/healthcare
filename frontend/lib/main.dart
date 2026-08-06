@@ -13,10 +13,10 @@ void main() async {
     if (!kIsWeb) {
       await Firebase.initializeApp();
     } else {
-      print('Running on Web: Bypassing Firebase Initialization to prevent crashes.');
+      debugPrint('Running on Web: Bypassing Firebase Initialization to prevent crashes.');
     }
   } catch (e) {
-    print('Firebase initialization error: ${e}');
+    debugPrint('Firebase initialization error: $e');
   }
   
   // Basic session check
@@ -36,7 +36,7 @@ void main() async {
 class CareAlertApp extends StatelessWidget {
   final Widget initialScreen;
   
-  const CareAlertApp({Key? key, required this.initialScreen}) : super(key: key);
+  const CareAlertApp({super.key, required this.initialScreen});
 
   @override
   Widget build(BuildContext context) {

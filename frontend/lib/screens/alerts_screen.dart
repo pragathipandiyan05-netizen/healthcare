@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 
 class AlertsScreen extends StatefulWidget {
+  const AlertsScreen({super.key});
+
   @override
-  _AlertsScreenState createState() => _AlertsScreenState();
+  State<AlertsScreen> createState() => _AlertsScreenState();
 }
 
 class _AlertsScreenState extends State<AlertsScreen> {
   final List<String> filters = ['District', 'Hospital', 'Department', 'Alert Type', 'Priority', 'Status', 'Date'];
-  final List<String> categories = ['SOS Emergency', 'Drug Shortage', 'Blood Request', 'Equipment Failure', 'Facility Hazard', 'Maintenance'];
+  final List<String> categories = const ['SOS Emergency', 'Drug Shortage', 'Blood Request', 'Equipment Failure', 'Facility Hazard', 'Maintenance'];
 
   @override
   Widget build(BuildContext context) {
