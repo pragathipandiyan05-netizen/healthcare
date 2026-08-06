@@ -43,7 +43,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
               child: Text(
                 'Web Preview Mode\\nFirebase is disabled to prevent crashes.', 
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 18, color: Colors.grey)
+                style: TextStyle(fontSize: 20, color: Colors.grey)
               )
             )
           : StreamBuilder<QuerySnapshot>(
@@ -62,7 +62,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                 final alerts = snapshot.data?.docs ?? [];
 
                 if (alerts.isEmpty) {
-                  return const Center(child: Text('No Incidents Logged', style: TextStyle(fontSize: 18, color: Colors.grey)));
+                  return const Center(child: Text('No Incidents Logged', style: TextStyle(fontSize: 20, color: Colors.grey)));
                 }
 
                 return ListView.builder(

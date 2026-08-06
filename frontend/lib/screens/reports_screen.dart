@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 
-class ReportsScreen extends StatelessWidget {
-  final List<String> categories = const ['SOS', 'Drug Shortage', 'Blood Request', 'Equipment Failure', 'Facility Hazard', 'Maintenance', 'General Incident'];
-
+class ReportsScreen extends StatefulWidget {
   const ReportsScreen({super.key});
-  
+
+  @override
+  State<ReportsScreen> createState() => _ReportsScreenState();
+}
+
+class _ReportsScreenState extends State<ReportsScreen> {
+  static const List<String> categories = ['SOS', 'Drug Shortage', 'Blood Request', 'Equipment Failure', 'Facility Hazard', 'Maintenance', 'General Incident'];
+  String _selectedCategory = 'SOS';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,7 +23,15 @@ class ReportsScreen extends StatelessWidget {
             child: Row(
               children: categories.map((c) => Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 4),
-                child: FilterChip(label: Text(c), onSelected: (b){}),
+                child: FilterChip(
+                  label: Text(c, style: TextStyle(color: _selectedCategory == c ? Colors.white : Colors.black)),
+                  selected: _selectedCategory == c,
+                  selectedColor: const Color(0xFF042e6f),
+                  checkmarkColor: Colors.white,
+                  onSelected: (b) {
+                    setState(() { _selectedCategory = c; });
+                  },
+                ),
               )).toList(),
             ),
           ),
@@ -29,11 +43,13 @@ class ReportsScreen extends StatelessWidget {
                   margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   child: ListTile(
                     title: Text('Report #REP-${2000 + index}', style: const TextStyle(fontWeight: FontWeight.bold)),
-                    subtitle: const Text('Reporter: Dr. John | Dept: ER\nType: Drug Shortage | Date: Oct 10'),
+                    subtitle: Text('Reporter: Dr. John | Dept: ER\nType: $_selectedCategory | Date: Oct 10'),
                     trailing: const Icon(Icons.chevron_right),
                     isThreeLine: true,
                     onTap: () {
-                      // Open detail report
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Opening report details...'))
+                      );
                     },
                   ),
                 );

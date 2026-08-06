@@ -21,6 +21,7 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
+  String _selectedAlertFilter = "All";
   int _currentIndex = 0;
 
   void sendSOS(BuildContext context) {
@@ -80,7 +81,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               'CARE ALERT',
               style: TextStyle(
                 color: Color(0xFF042e6f),
-                fontSize: 18,
+                fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -112,12 +113,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             child: const Icon(Icons.shield, color: Colors.red, size: 28),
                           ),
                           const SizedBox(width: 12),
-                          const Text('CARE ALERT', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)),
+                          const Text('CARE ALERT', style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)),
                         ],
                       ),
                     ),
                   ),
-                  ListTile(leading: const Icon(Icons.home, color: Color(0xFF042e6f)), title: const Text('Home', style: TextStyle(fontWeight: FontWeight.bold)), onTap: () {}),
+                  ListTile(leading: const Icon(Icons.home, color: Color(0xFF042e6f)), title: const Text('Home', style: TextStyle(fontWeight: FontWeight.bold)), onTap: () => Navigator.pop(context)),
                   ListTile(leading: const Icon(Icons.notifications), title: const Text('Alerts'), onTap: () {
                     Navigator.pop(context);
                     Navigator.push(context, MaterialPageRoute(builder: (context) => AlertsScreen()));
@@ -215,11 +216,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: const [
-                        Text('Welcome', style: TextStyle(color: Colors.white70, fontSize: 12)),
+                        Text('Welcome', style: TextStyle(color: Colors.white70, fontSize: 14)),
                         SizedBox(height: 2),
-                        Text('Dr. Kavitha R', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)),
+                        Text('Dr. Kavitha R', style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)),
                         SizedBox(height: 2),
-                        Text('Government Hospital, Chennai', style: TextStyle(color: Colors.white70, fontSize: 12)),
+                        Text('Government Hospital, Chennai', style: TextStyle(color: Colors.white70, fontSize: 14)),
                       ],
                     ),
                   ),
@@ -227,7 +228,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     icon: const Icon(Icons.notifications_none, color: Colors.white, size: 24),
                     padding: EdgeInsets.zero,
                     constraints: const BoxConstraints(),
-                    onPressed: () {},
+                    onPressed: () { ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Feature coming soon!'))); },
                   ),
                 ],
               ),
@@ -257,8 +258,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           children: const [
                             Icon(Icons.health_and_safety, color: Colors.white, size: 40),
                             SizedBox(height: 8),
-                            Text('SOS', style: TextStyle(color: Colors.white, fontSize: 32, fontWeight: FontWeight.bold, letterSpacing: 2)),
-                            Text('Emergency\nHelp', textAlign: TextAlign.center, style: TextStyle(color: Colors.white, fontSize: 12)),
+                            Text('SOS', style: TextStyle(color: Colors.white, fontSize: 34, fontWeight: FontWeight.bold, letterSpacing: 2)),
+                            Text('Emergency\nHelp', textAlign: TextAlign.center, style: TextStyle(color: Colors.white, fontSize: 14)),
                           ],
                         ),
                       ),
@@ -266,7 +267,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   ),
                   const SizedBox(height: 32),
 
-                  const Text('Quick Actions', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black87)),
+                  const Text('Quick Actions', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black87)),
                   const SizedBox(height: 16),
                   
                   // Grid of Actions
@@ -286,7 +287,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   ),
 
                   const SizedBox(height: 32),
-                  const Text('Dashboard Summary', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black87)),
+                  const Text('Dashboard Summary', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black87)),
                   const SizedBox(height: 16),
                   Row(
                     children: [
@@ -305,7 +306,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   ),
 
                   const SizedBox(height: 32),
-                  const Text('Recent Activity', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black87)),
+                  const Text('Recent Activity', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black87)),
                   const SizedBox(height: 16),
                   _buildActivityItem('Blood Request (O+)', 'Resolved', '2 hrs ago', Icons.check_circle, Colors.green),
                   _buildActivityItem('Equipment Fault (MRI)', 'Pending', '5 hrs ago', Icons.pending, Colors.orange),
@@ -330,9 +331,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(count, style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: color)),
+          Text(count, style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold, color: color)),
           const SizedBox(height: 4),
-          Text(title, style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: Colors.black87)),
+          Text(title, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.black87)),
         ],
       ),
     );
@@ -345,8 +346,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
         backgroundColor: color.withValues(alpha: 0.1),
         child: Icon(icon, color: color),
       ),
-      title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
-      subtitle: Text('$status • $time', style: TextStyle(color: Colors.grey.shade600, fontSize: 12)),
+      title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+      subtitle: Text('$status • $time', style: TextStyle(color: Colors.grey.shade600, fontSize: 14)),
     );
   }
 
@@ -362,12 +363,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               child: Row(
                 children: [
-                  _buildFilterChip('All', true),
-                  _buildFilterChip('SOS', false),
-                  _buildFilterChip('Drug Shortage', false),
-                  _buildFilterChip('Blood', false),
-                  _buildFilterChip('Equipment', false),
-                  _buildFilterChip('Resolved', false),
+                  ...['All', 'SOS', 'Drug Shortage', 'Blood', 'Equipment', 'Resolved'].map((label) => _buildFilterChip(label, _selectedAlertFilter == label)),
                 ],
               ),
             ),
@@ -376,18 +372,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
               child: ListView(
                 padding: const EdgeInsets.all(16),
                 children: [
-                  _buildAlertCard('Critical SOS', 'Govt Hospital, Chennai', 'Emergency Ward', 'Just now', 'Critical', 'Active', Icons.warning, Colors.red),
-                  _buildAlertCard('Blood Required (O+)', 'Govt Hospital, Chennai', 'Blood Bank', '10 min ago', 'High', 'Acknowledged', Icons.bloodtype, Colors.orange),
-                  _buildAlertCard('Ventilator Fault', 'Govt Hospital, Madurai', 'ICU', '1 hr ago', 'High', 'Active', Icons.build, Colors.orange),
-                  _buildAlertCard('Paracetamol Shortage', 'Primary Health Centre', 'Pharmacy', '3 hrs ago', 'Medium', 'Resolved', Icons.medication, Colors.green),
-                ],
+                  {'title': 'Critical SOS', 'hosp': 'Govt Hospital, Chennai', 'dept': 'Emergency Ward', 'time': 'Just now', 'priority': 'Critical', 'status': 'Active', 'icon': Icons.warning, 'color': Colors.red, 'cat': 'SOS'},
+                  {'title': 'Blood Required (O+)', 'hosp': 'Govt Hospital, Chennai', 'dept': 'Blood Bank', 'time': '10 min ago', 'priority': 'High', 'status': 'Acknowledged', 'icon': Icons.bloodtype, 'color': Colors.orange, 'cat': 'Blood'},
+                  {'title': 'Ventilator Fault', 'hosp': 'Govt Hospital, Madurai', 'dept': 'ICU', 'time': '1 hr ago', 'priority': 'High', 'status': 'Active', 'icon': Icons.build, 'color': Colors.orange, 'cat': 'Equipment'},
+                  {'title': 'Paracetamol Shortage', 'hosp': 'Primary Health Centre', 'dept': 'Pharmacy', 'time': '3 hrs ago', 'priority': 'Medium', 'status': 'Resolved', 'icon': Icons.medication, 'color': Colors.green, 'cat': 'Drug Shortage'},
+                ].where((a) => _selectedAlertFilter == 'All' || _selectedAlertFilter == 'Resolved' && a['status'] == 'Resolved' || _selectedAlertFilter == a['cat'] && a['status'] != 'Resolved').map((a) => 
+                  _buildAlertCard(a['title'] as String, a['hosp'] as String, a['dept'] as String, a['time'] as String, a['priority'] as String, a['status'] as String, a['icon'] as IconData, a['color'] as Color)
+                ).toList(),
               ),
             ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () { ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Feature coming soon!'))); },
         backgroundColor: const Color(0xFF042e6f),
         child: const Icon(Icons.add, color: Colors.white),
       ),
@@ -400,7 +398,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
       child: FilterChip(
         label: Text(label, style: TextStyle(color: isSelected ? Colors.white : Colors.black87)),
         selected: isSelected,
-        onSelected: (bool selected) {},
+        onSelected: (bool selected) {
+          setState(() {
+            _selectedAlertFilter = label;
+          });
+        },
         backgroundColor: Colors.white,
         selectedColor: const Color(0xFF042e6f),
         checkmarkColor: Colors.white,
@@ -427,12 +429,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                      Text('$hospital • $dept', style: TextStyle(color: Colors.grey.shade600, fontSize: 12)),
+                      Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+                      Text('$hospital • $dept', style: TextStyle(color: Colors.grey.shade600, fontSize: 14)),
                     ],
                   ),
                 ),
-                Text(time, style: TextStyle(color: Colors.grey.shade500, fontSize: 12)),
+                Text(time, style: TextStyle(color: Colors.grey.shade500, fontSize: 14)),
               ],
             ),
             const SizedBox(height: 16),
@@ -447,8 +449,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                TextButton.icon(onPressed: () {}, icon: const Icon(Icons.visibility, size: 18), label: const Text('View')),
-                TextButton.icon(onPressed: () {}, icon: const Icon(Icons.check_circle_outline, size: 18), label: const Text('Acknowledge')),
+                TextButton.icon(onPressed: () { ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Feature coming soon!'))); }, icon: const Icon(Icons.visibility, size: 18), label: const Text('View')),
+                TextButton.icon(onPressed: () { ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Feature coming soon!'))); }, icon: const Icon(Icons.check_circle_outline, size: 18), label: const Text('Acknowledge')),
               ],
             )
           ],
@@ -461,7 +463,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(color: color.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(8), border: Border.all(color: color.withValues(alpha: 0.5))),
-      child: Text(text, style: TextStyle(color: color, fontSize: 10, fontWeight: FontWeight.bold)),
+      child: Text(text, style: TextStyle(color: color, fontSize: 12, fontWeight: FontWeight.bold)),
     );
   }
 
@@ -480,8 +482,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   child: Icon(Icons.person, size: 50, color: Colors.white),
                 ),
                 const SizedBox(height: 16),
-                const Text('Dr. Kavitha R', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-                Text('EMP-001 • Chief Medical Officer', style: TextStyle(fontSize: 14, color: Colors.grey.shade600)),
+                const Text('Dr. Kavitha R', style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold)),
+                Text('EMP-001 • Chief Medical Officer', style: TextStyle(fontSize: 16, color: Colors.grey.shade600)),
               ],
             ),
           ),
@@ -506,7 +508,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ),
           const SizedBox(height: 32),
           
-          const Text('Settings', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black87)),
+          const Text('Settings', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black87)),
           const SizedBox(height: 8),
           _buildSettingsTile(Icons.edit, 'Edit Profile'),
           _buildSettingsTile(Icons.language, 'Language (English / தமிழ்)'),
@@ -531,8 +533,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(width: 100, child: Text(label, style: TextStyle(color: Colors.grey.shade600, fontSize: 14))),
-          Expanded(child: Text(value, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14))),
+          SizedBox(width: 100, child: Text(label, style: TextStyle(color: Colors.grey.shade600, fontSize: 16))),
+          Expanded(child: Text(value, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16))),
         ],
       ),
     );
@@ -574,7 +576,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             Text(
               label,
               textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: Colors.black87),
+              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.black87),
             ),
           ],
         ),

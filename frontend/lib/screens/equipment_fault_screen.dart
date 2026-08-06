@@ -181,7 +181,7 @@ class _EquipmentFaultScreenState extends State<EquipmentFaultScreen> {
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                 ),
-                child: const Text('Submit Equipment Fault', style: TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.bold)),
+                child: const Text('Submit Equipment Fault', style: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold)),
               ),
               const SizedBox(height: 32),
             ],
@@ -194,7 +194,7 @@ class _EquipmentFaultScreenState extends State<EquipmentFaultScreen> {
   Widget _buildSectionTitle(String title) {
     return Text(
       title,
-      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF042e6f)),
+      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF042e6f)),
     );
   }
 }

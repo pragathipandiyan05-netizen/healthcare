@@ -81,7 +81,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     'CARE ALERT',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 24,
+                      fontSize: 26,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                       letterSpacing: 1.5,
@@ -91,7 +91,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     'STATEWIDE PLATFORM',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 10,
+                      fontSize: 12,
                       color: Colors.white70,
                       fontWeight: FontWeight.w600,
                       letterSpacing: 2,
@@ -216,7 +216,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         child: const Text(
                           'LOGIN',
-                          style: TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.bold),
+                          style: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),
                         ),
                       ),
                       const SizedBox(height: 16),

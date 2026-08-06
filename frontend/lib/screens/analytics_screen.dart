@@ -50,8 +50,8 @@ class AnalyticsScreen extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            Text(value, style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: color)),
-            Text(title, textAlign: TextAlign.center, style: const TextStyle(fontSize: 12)),
+            Text(value, style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold, color: color)),
+            Text(title, textAlign: TextAlign.center, style: const TextStyle(fontSize: 14)),
           ],
         ),
       ),

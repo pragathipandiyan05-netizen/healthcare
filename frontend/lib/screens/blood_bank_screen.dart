@@ -14,7 +14,7 @@ class BloodBankScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Padding(padding: EdgeInsets.all(16), child: Text('Available Blood Units', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold))),
+            const Padding(padding: EdgeInsets.all(16), child: Text('Available Blood Units', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
             GridView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
@@ -33,7 +33,7 @@ class BloodBankScreen extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(bloodGroups[index], style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.red)),
+                        Text(bloodGroups[index], style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.red)),
                         const Text('12 U', style: TextStyle(color: Colors.red)),
                       ],
                     ),
@@ -41,7 +41,7 @@ class BloodBankScreen extends StatelessWidget {
                 );
               },
             ),
-            const Padding(padding: EdgeInsets.all(16), child: Text('Blood Components', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold))),
+            const Padding(padding: EdgeInsets.all(16), child: Text('Blood Components', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -54,7 +54,7 @@ class BloodBankScreen extends StatelessWidget {
                 )).toList(),
               ),
             ),
-            const Padding(padding: EdgeInsets.all(16), child: Text('Pending Requests', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold))),
+            const Padding(padding: EdgeInsets.all(16), child: Text('Pending Requests', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
             ListView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
