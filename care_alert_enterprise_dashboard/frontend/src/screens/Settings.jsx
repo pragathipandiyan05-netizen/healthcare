@@ -21,7 +21,7 @@ function TabPanel(props) {
 export default function Settings() {
   const [tabValue, setTabValue] = useState(0);
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const isMobile = true; // Forced mobile interface
 
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue);

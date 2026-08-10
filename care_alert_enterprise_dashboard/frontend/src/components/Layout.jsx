@@ -19,23 +19,23 @@ export default function Layout({ children }) {
   const navigate = useNavigate();
   const location = useLocation();
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const isMobile = true; // Forced mobile interface
 
   const [mobileMoreOpen, setMobileMoreOpen] = useState(false);
 
   const menuItems = [
     { text: 'Dashboard', icon: <Dashboard />, path: '/dashboard', active: true },
-    { text: 'Live SOS Alerts', icon: <NotificationsActive />, path: '/alerts', badge: 8, badgeColor: 'error' },
-    { text: 'All Alerts', icon: <Warning />, path: '/all-alerts', badge: 24, badgeColor: 'warning' },
+    { text: 'Live SOS Alerts', icon: <NotificationsActive />, path: '/alerts', badge: 8 },
+    { text: 'All Alerts', icon: <Warning />, path: '/all-alerts', badge: 24 },
     { text: 'Hospitals', icon: <LocalHospital />, path: '/hospitals' },
-    { text: 'Staff / Workers', icon: <AssignmentInd />, path: '/admin/workers/create' },
-    { text: 'Inventory', icon: <MedicalServices />, path: '/inventory', badge: 31, badgeColor: 'warning' },
-    { text: 'Blood Bank', icon: <Bloodtype />, path: '/bloodbank', badge: 18, badgeColor: 'error' },
-    { text: 'Equipment', icon: <Assessment />, path: '/equipment', badge: 21, badgeColor: 'warning' },
-    { text: 'Ambulances', icon: <Explore />, path: '/ambulances', badge: 'Live', badgeColor: 'success' },
+    { text: 'Staff / Workers', icon: <AssignmentInd />, path: '/admin/workers' },
+    { text: 'Inventory', icon: <MedicalServices />, path: '/inventory', badge: 31 },
+    { text: 'Blood Bank', icon: <Bloodtype />, path: '/bloodbank', badge: 18 },
+    { text: 'Equipment', icon: <Assessment />, path: '/equipment', badge: 21 },
+    { text: 'Ambulances', icon: <Explore />, path: '/ambulances', badge: 'Live' },
     { text: 'Analytics & Reports', icon: <Assessment />, path: '/analytics' },
     { text: 'GIS Map', icon: <MapIcon />, path: '/map' },
-    { text: 'Notifications', icon: <Notifications />, path: '/notifications', badge: 12, badgeColor: 'primary' },
+    { text: 'Notifications', icon: <Notifications />, path: '/notifications', badge: 12 },
     { text: 'Audit Logs', icon: <Assignment />, path: '/audit' },
     { text: 'Settings', icon: <Settings />, path: '/settings' },
   ];
@@ -96,7 +96,7 @@ export default function Layout({ children }) {
                     </ListItemIcon>
                     <ListItemText primary={item.text} primaryTypographyProps={{ fontSize: '13px', fontWeight: isActive ? 600 : 500 }} />
                     {item.badge && (
-                      <Box sx={{ bgcolor: item.badgeColor === 'success' ? '#D1FAE5' : (isActive ? 'primary.main' : `${item.badgeColor}.main`), color: item.badgeColor === 'success' ? '#059669' : 'white', px: 1, py: 0.2, borderRadius: 10, fontSize: '10px', fontWeight: 600 }}>
+                      <Box sx={{ bgcolor: 'primary.main', color: 'white', px: 1, py: 0.2, borderRadius: 10, fontSize: '10px', fontWeight: 600 }}>
                         {item.badge}
                       </Box>
                     )}
@@ -185,8 +185,7 @@ export default function Layout({ children }) {
       </Box>
 
       {/* MOBILE BOTTOM NAVIGATION */}
-      {isMobile && (
-        <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, borderTop: '1px solid #E2E8F0', zIndex: 1100 }} elevation={4}>
+        <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, margin: '0 auto', maxWidth: 430, borderTop: '1px solid #E2E8F0', zIndex: 1100 }} elevation={4}>
           <BottomNavigation
             value={getCurrentBottomNavValue()}
             onChange={(event, newValue) => {
@@ -199,22 +198,20 @@ export default function Layout({ children }) {
             showLabels
             sx={{ height: 70 }}
           >
-            <BottomNavigationAction label="Home" icon={<Home />} sx={{ '&.Mui-selected': { color: 'primary.main' } }} />
-            <BottomNavigationAction label="SOS Alerts" icon={<Badge badgeContent={8} color="error"><NotificationsActive /></Badge>} sx={{ '&.Mui-selected': { color: 'primary.main' } }} />
-            <BottomNavigationAction label="Hospitals" icon={<LocalHospital />} sx={{ '&.Mui-selected': { color: 'primary.main' } }} />
-            <BottomNavigationAction label="Alerts" icon={<Warning />} sx={{ '&.Mui-selected': { color: 'primary.main' } }} />
-            <BottomNavigationAction label="More" icon={<GridView />} sx={{ '&.Mui-selected': { color: 'primary.main' } }} />
+            <BottomNavigationAction label="Home" icon={<Home />} sx={{ minWidth: 'auto', '&.Mui-selected': { color: 'primary.main' } }} />
+            <BottomNavigationAction label="SOS Alerts" icon={<Badge badgeContent={8} color="error"><NotificationsActive /></Badge>} sx={{ minWidth: 'auto', '&.Mui-selected': { color: 'primary.main' } }} />
+            <BottomNavigationAction label="Hospitals" icon={<LocalHospital />} sx={{ minWidth: 'auto', '&.Mui-selected': { color: 'primary.main' } }} />
+            <BottomNavigationAction label="Alerts" icon={<Warning />} sx={{ minWidth: 'auto', '&.Mui-selected': { color: 'primary.main' } }} />
+            <BottomNavigationAction label="More" icon={<GridView />} sx={{ minWidth: 'auto', '&.Mui-selected': { color: 'primary.main' } }} />
           </BottomNavigation>
         </Paper>
-      )}
 
       {/* MOBILE "MORE" DRAWER */}
       <SwipeableDrawer
-        anchor="bottom"
+        anchor="left"
         open={mobileMoreOpen}
         onClose={() => setMobileMoreOpen(false)}
         onOpen={() => setMobileMoreOpen(true)}
-        sx={{ '& .MuiDrawer-paper': { borderTopLeftRadius: 16, borderTopRightRadius: 16 } }}
       >
         <Box sx={{ width: 'auto', role: 'presentation' }} onClick={() => setMobileMoreOpen(false)} onKeyDown={() => setMobileMoreOpen(false)}>
           <Box sx={{ p: 2, display: 'flex', justifyContent: 'center' }}>
@@ -228,7 +225,7 @@ export default function Layout({ children }) {
                   <ListItemIcon sx={{ minWidth: 40, color: 'text.secondary' }}>{item.icon}</ListItemIcon>
                   <ListItemText primary={item.text} primaryTypographyProps={{ fontWeight: 600, color: 'text.primary' }} />
                   {item.badge && (
-                    <Box sx={{ bgcolor: item.badgeColor === 'success' ? '#D1FAE5' : `${item.badgeColor}.main`, color: item.badgeColor === 'success' ? '#059669' : 'white', px: 1.5, py: 0.2, borderRadius: 10, fontSize: '11px', fontWeight: 700 }}>
+                    <Box sx={{ bgcolor: 'primary.main', color: 'white', px: 1.5, py: 0.2, borderRadius: 10, fontSize: '11px', fontWeight: 700 }}>
                       {item.badge}
                     </Box>
                   )}

@@ -84,8 +84,8 @@ const MobileKPICard = ({ title, value, subtext, subtextColor, icon, iconColor, i
 export default function Dashboard() {
   const { liveSosAlerts } = useSosWebSocket();
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const isTablet = useMediaQuery(theme.breakpoints.down('xl'));
+  const isMobile = true; // Forced mobile interface
+  const isTablet = true;
   const navigate = useNavigate();
 
   const displayAlerts = liveSosAlerts.length > 0 ? liveSosAlerts : [

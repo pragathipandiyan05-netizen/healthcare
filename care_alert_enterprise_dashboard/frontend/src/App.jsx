@@ -11,6 +11,7 @@ import Hospitals from './screens/Hospitals';
 import Analytics from './screens/Analytics';
 import Reports from './screens/Reports';
 import AdminAddStaff from './screens/AdminAddStaff';
+import WorkersList from './screens/WorkersList';
 import StaffPortal from './screens/StaffPortal';
 import Layout from './components/Layout';
 import Equipment from './screens/Equipment';
@@ -83,6 +84,14 @@ function App() {
             element={
               <Layout>
                 <Reports />
+              </Layout>
+            } 
+          />
+          <Route 
+            path="/admin/workers" 
+            element={
+              <Layout>
+                <WorkersList />
               </Layout>
             } 
           />
