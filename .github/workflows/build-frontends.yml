@@ -1,0 +1,60 @@
+name: Build Flutter APK
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+
+      - name: Install dependencies
+        working-directory: ./frontend/mobile_app
+        run: flutter pub get
+
+      - name: Patch telephony plugin
+        working-directory: ./frontend/mobile_app
+        run: python patch_plugin.py
+
+      - name: Build APK
+        working-directory: ./frontend/mobile_app
+        run: flutter build apk --release
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: care-alert-apk
+          path: frontend/mobile_app/build/app/outputs/flutter-apk/app-release.apk
+
+  build-admin:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        working-directory: ./frontend/admin_portal
+        run: npm install
+
+      - name: Build Admin Portal
+        working-directory: ./frontend/admin_portal
+        run: npm run build
