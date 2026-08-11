@@ -26,9 +26,10 @@ void main() async {
   Widget initialScreen = const LoginScreen();
   if (role == 'SECURITY_STAFF' || role == 'SECURITY_SUPERVISOR') {
     initialScreen = const SecurityDashboardScreen();
-  } else if (role == 'MEDICAL_STAFF') {
+  } else if (role == 'MEDICAL_STAFF' || role != null) {
     initialScreen = const DashboardScreen();
   }
+
 
   runApp(CareAlertApp(initialScreen: initialScreen));
 }
