@@ -36,87 +36,33 @@ class _LoginScreenState extends State<LoginScreen> {
 
     setState(() => _isLoading = true);
 
-    try {
-      final response = await http.post(
-        Uri.parse('${ApiConstants.baseUrl}/auth/login'),
-        headers: {'Content-Type': 'application/json'},
-        body: json.encode({'email': email, 'password': password}),
-      );
+    // BYPASS API COMPLETELY FOR DEMO MODE
+    // Wait briefly to simulate network
+    await Future.delayed(const Duration(milliseconds: 600));
 
-      if (!mounted) return;
-      setState(() => _isLoading = false);
+    if (!mounted) return;
+    setState(() => _isLoading = false);
 
-      if (response.statusCode == 200) {
-        final data = json.decode(response.body);
-        final role = data['role'] as String;
-        final name = data['name'] as String? ?? email;
-
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        await prefs.setString('staff_id', email);
-        await prefs.setString('role', role);
-        await prefs.setString('name', name);
-
-        if (!mounted) return;
-
-        if (role == 'SECURITY_STAFF' || role == 'SECURITY_SUPERVISOR') {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => const SecurityDashboardScreen()),
-          );
-        } else {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => const DashboardScreen()),
-          );
-        }
-      } else {
-        final data = json.decode(response.body);
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(data['error'] ?? 'Login failed. Please try again.'),
-            backgroundColor: Colors.red,
-          ),
-        );
-      }
-    } catch (e) {
-      if (!mounted) return;
-      setState(() => _isLoading = false);
-
-      // DEMO MODE FALLBACK: If backend is unreachable (e.g. from GitHub Pages),
-      // allow them to enter anyway so the mentor can see the UI.
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Server unreachable. Entering DEMO MODE.'),
-          backgroundColor: Colors.orange,
-          duration: Duration(seconds: 2),
-        ),
-      );
-
-      SharedPreferences prefs = await SharedPreferences.getInstance();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    
+    if (email.contains('security')) {
+      await prefs.setString('staff_id', email);
+      await prefs.setString('role', 'SECURITY_SUPERVISOR');
+      await prefs.setString('name', 'Demo Security');
       
-      if (email.contains('security')) {
-        await prefs.setString('staff_id', 'demo_sec_01');
-        await prefs.setString('role', 'SECURITY_SUPERVISOR');
-        await prefs.setString('name', 'Demo Security Officer');
-        Future.delayed(const Duration(seconds: 1), () {
-          if (!mounted) return;
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => const SecurityDashboardScreen()),
-          );
-        });
-      } else {
-        await prefs.setString('staff_id', 'demo_staff_01');
-        await prefs.setString('role', 'MEDICAL_STAFF');
-        await prefs.setString('name', 'Demo Doctor');
-        Future.delayed(const Duration(seconds: 1), () {
-          if (!mounted) return;
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => const DashboardScreen()),
-          );
-        });
-      }
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const SecurityDashboardScreen()),
+      );
+    } else {
+      await prefs.setString('staff_id', email);
+      await prefs.setString('role', 'MEDICAL_STAFF');
+      await prefs.setString('name', 'Demo Staff');
+      
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const DashboardScreen()),
+      );
     }
   }
 

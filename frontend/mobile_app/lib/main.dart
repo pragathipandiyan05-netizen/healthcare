@@ -19,13 +19,16 @@ void main() async {
     debugPrint('Firebase initialization error: $e');
   }
   
-  // BYPASS LOGIN ENTIRELY for the mentor demo
+  // Basic session check
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  await prefs.setString('staff_id', 'demo_sec_01');
-  await prefs.setString('role', 'SECURITY_SUPERVISOR');
-  await prefs.setString('name', 'Demo Security Officer');
+  String? role = prefs.getString('role');
   
-  Widget initialScreen = const SecurityDashboardScreen();
+  Widget initialScreen = const LoginScreen();
+  if (role == 'SECURITY_STAFF' || role == 'SECURITY_SUPERVISOR') {
+    initialScreen = const SecurityDashboardScreen();
+  } else if (role == 'MEDICAL_STAFF') {
+    initialScreen = const DashboardScreen();
+  }
 
   runApp(CareAlertApp(initialScreen: initialScreen));
 }
