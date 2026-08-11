@@ -19,17 +19,7 @@ void main() async {
     debugPrint('Firebase initialization error: $e');
   }
   
-  // Basic session check
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  String? role = prefs.getString('role');
-  
   Widget initialScreen = const LoginScreen();
-  if (role == 'SECURITY_STAFF' || role == 'SECURITY_SUPERVISOR') {
-    initialScreen = const SecurityDashboardScreen();
-  } else if (role == 'MEDICAL_STAFF' || role != null) {
-    initialScreen = const DashboardScreen();
-  }
-
 
   runApp(CareAlertApp(initialScreen: initialScreen));
 }
