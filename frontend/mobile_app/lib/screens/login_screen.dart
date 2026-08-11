@@ -81,13 +81,42 @@ class _LoginScreenState extends State<LoginScreen> {
     } catch (e) {
       if (!mounted) return;
       setState(() => _isLoading = false);
+
+      // DEMO MODE FALLBACK: If backend is unreachable (e.g. from GitHub Pages),
+      // allow them to enter anyway so the mentor can see the UI.
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Cannot connect to server. Check your network.\n$e'),
-          backgroundColor: Colors.red,
-          duration: const Duration(seconds: 4),
+        const SnackBar(
+          content: Text('Server unreachable. Entering DEMO MODE.'),
+          backgroundColor: Colors.orange,
+          duration: Duration(seconds: 2),
         ),
       );
+
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      
+      if (email.contains('security')) {
+        await prefs.setString('staff_id', 'demo_sec_01');
+        await prefs.setString('role', 'SECURITY_SUPERVISOR');
+        await prefs.setString('name', 'Demo Security Officer');
+        Future.delayed(const Duration(seconds: 1), () {
+          if (!mounted) return;
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const SecurityDashboardScreen()),
+          );
+        });
+      } else {
+        await prefs.setString('staff_id', 'demo_staff_01');
+        await prefs.setString('role', 'MEDICAL_STAFF');
+        await prefs.setString('name', 'Demo Doctor');
+        Future.delayed(const Duration(seconds: 1), () {
+          if (!mounted) return;
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const DashboardScreen()),
+          );
+        });
+      }
     }
   }
 
