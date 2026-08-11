@@ -211,6 +211,28 @@ app.get('/api/reports/facility-hazard', async (req, res) => {
   }
 });
 
+// GET /api/alerts/stats — counts for dashboard KPIs
+app.get('/api/alerts/stats', async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT
+        COUNT(*) FILTER (WHERE status = 'ACTIVE') AS active,
+        COUNT(*) FILTER (WHERE status = 'RESOLVED') AS resolved,
+        COUNT(*) AS total
+      FROM care_alerts
+    `);
+    const row = result.rows[0];
+    res.json({
+      active: parseInt(row.active),
+      resolved: parseInt(row.resolved),
+      total: parseInt(row.total),
+    });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ error: 'Server Error' });
+  }
+});
+
 // ============================================================
 // HEALTH CHECK
 // ============================================================
