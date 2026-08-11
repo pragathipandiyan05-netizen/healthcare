@@ -9,11 +9,11 @@ import {
 } from '@mui/icons-material';
 
 const mockMarkers = [
-  { id: 1, type: 'hospital', lat: 13.0827, lng: 80.2707, name: 'Government General Hospital', district: 'Chennai', status: 'Online', beds: '384 / 400', icon: <LocalHospital />, color: '#10B981' },
-  { id: 2, type: 'sos', lat: 13.0450, lng: 80.2200, name: 'Critical Road Accident', district: 'Chennai', status: 'Active', time: '5 mins ago', icon: <NotificationsActive />, color: '#EF4444' },
-  { id: 3, type: 'ambulance', lat: 13.0550, lng: 80.2400, name: 'TN-01-AB-1234', district: 'Chennai', status: 'On Trip', dest: 'Government General Hospital', icon: <DirectionsCar />, color: '#3B82F6' },
-  { id: 4, type: 'inventory', lat: 9.9252, lng: 78.1198, name: 'Oxygen Shortage (O2)', district: 'Madurai', status: 'Warning', hospital: 'Madurai Medical College', icon: <MedicalServices />, color: '#F59E0B' },
-  { id: 5, type: 'blood', lat: 11.0168, lng: 76.9558, name: 'O-Negative Urgent', district: 'Coimbatore', status: 'Critical', hospital: 'Coimbatore GH', icon: <Bloodtype />, color: '#EF4444' },
+  { id: 1, type: 'hospital', top: '35%', left: '45%', lat: 13.0827, lng: 80.2707, name: 'Government General Hospital', district: 'Chennai', status: 'Online', beds: '384 / 400', icon: <LocalHospital />, color: '#10B981' },
+  { id: 2, type: 'sos', top: '55%', left: '65%', lat: 13.0450, lng: 80.2200, name: 'Critical Road Accident', district: 'Chennai', status: 'Active', time: '5 mins ago', icon: <NotificationsActive />, color: '#EF4444' },
+  { id: 3, type: 'ambulance', top: '45%', left: '75%', lat: 13.0550, lng: 80.2400, name: 'TN-01-AB-1234', district: 'Chennai', status: 'On Trip', dest: 'Government General Hospital', icon: <DirectionsCar />, color: '#3B82F6' },
+  { id: 4, type: 'inventory', top: '70%', left: '40%', lat: 9.9252, lng: 78.1198, name: 'Oxygen Shortage (O2)', district: 'Madurai', status: 'Warning', hospital: 'Madurai Medical College', icon: <MedicalServices />, color: '#F59E0B' },
+  { id: 5, type: 'blood', top: '25%', left: '60%', lat: 11.0168, lng: 76.9558, name: 'O-Negative Urgent', district: 'Coimbatore', status: 'Critical', hospital: 'Coimbatore GH', icon: <Bloodtype />, color: '#EF4444' },
 ];
 
 export default function GISMap() {
@@ -68,7 +68,7 @@ export default function GISMap() {
             key={marker.id}
             onClick={() => setSelectedMarker(marker)}
             sx={{ 
-              position: 'absolute', top: `${20 + (i * 15)}%`, left: `${30 + (i * 10)}%`, 
+              position: 'absolute', top: marker.top, left: marker.left, 
               width: 48, height: 48, borderRadius: '50%', bgcolor: 'white', 
               display: 'flex', alignItems: 'center', justifyContent: 'center', 
               boxShadow: '0 4px 12px rgba(0,0,0,0.15)', cursor: 'pointer',

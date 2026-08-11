@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dashboard_screen.dart';
+import 'security/security_dashboard_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -16,21 +17,43 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _obscurePassword = true;
 
   void _login() async {
-    if (_staffIdController.text.trim() == 'staff@gmail.com' && _passwordController.text == 'password') {
+    final email = _staffIdController.text.trim().toLowerCase();
+    final password = _passwordController.text;
+
+    if (email == 'staff@gmail.com' && password == 'password') {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString(
-          'staff_id', _staffIdController.text.isNotEmpty ? _staffIdController.text : 'STAFF-1234');
+      await prefs.setString('staff_id', email.isNotEmpty ? email : 'STAFF-1234');
       await prefs.setString('role', 'Staff (Doctor/Nurse)');
 
       if (!mounted) return;
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => DashboardScreen()),
+        MaterialPageRoute(builder: (context) => const DashboardScreen()),
+      );
+    } else if (email == 'security@gmail.com' && password == 'password') {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('staff_id', email);
+      await prefs.setString('role', 'SECURITY_STAFF');
+
+      if (!mounted) return;
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const SecurityDashboardScreen()),
+      );
+    } else if (email == 'supervisor@gmail.com' && password == 'password') {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('staff_id', email);
+      await prefs.setString('role', 'SECURITY_SUPERVISOR');
+
+      if (!mounted) return;
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const SecurityDashboardScreen()),
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Invalid credentials. Please use staff@gmail.com and password'),
+          content: Text('Invalid credentials. Try staff@, security@, or supervisor@ with password'),
           backgroundColor: Colors.red,
         ),
       );
@@ -41,6 +64,15 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     const Color primaryBlue = Color(0xFF042e6f);
     final bool isKeyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
+
+    final String titleText = isEnglish ? 'CARE ALERT' : 'கேர் அலர்ட்';
+    final String subtitleText = isEnglish ? 'STATEWIDE PLATFORM' : 'மாநில அளவிலான தளம்';
+    final String emailLabel = isEnglish ? 'Email / Staff ID' : 'மின்னஞ்சல் / பணியாளர் ஐடி';
+    final String passwordLabel = isEnglish ? 'Password' : 'கடவுச்சொல்';
+    final String forgotPasswordText = isEnglish ? 'Forgot Password?' : 'கடவுச்சொல்லை மறந்துவிட்டீர்களா?';
+    final String loginButtonText = isEnglish ? 'LOGIN' : 'உள்நுழைய';
+    final String noAccountText = isEnglish ? "Don't have an account? " : "கணக்கு இல்லையா? ";
+    final String registerText = isEnglish ? 'Register' : 'பதிவு செய்';
 
     return Scaffold(
       backgroundColor: primaryBlue,
@@ -68,8 +100,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     const SizedBox(height: 12),
                   ],
-                  const Text(
-                    'CARE ALERT',
+                  Text(
+                    titleText,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 30,
@@ -78,8 +110,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       letterSpacing: 1.5,
                     ),
                   ),
-                  const Text(
-                    'STATEWIDE PLATFORM',
+                  Text(
+                    subtitleText,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 16,
@@ -148,7 +180,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       TextField(
                         controller: _staffIdController,
                         decoration: InputDecoration(
-                          labelText: 'Email / Staff ID',
+                          labelText: emailLabel,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
                             borderSide: BorderSide(color: Colors.grey.shade300),
@@ -164,7 +196,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         controller: _passwordController,
                         obscureText: _obscurePassword,
                         decoration: InputDecoration(
-                          labelText: 'Password',
+                          labelText: passwordLabel,
                           suffixIcon: GestureDetector(
                             onTap: () {
                               setState(() {
@@ -194,7 +226,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         alignment: Alignment.centerLeft,
                         child: TextButton(
                           onPressed: () {},
-                          child: const Text('Forgot Password?', style: TextStyle(color: primaryBlue, fontWeight: FontWeight.bold)),
+                          child: Text(forgotPasswordText, style: const TextStyle(color: primaryBlue, fontWeight: FontWeight.bold)),
                         ),
                       ),
                       const SizedBox(height: 8),
@@ -205,17 +237,17 @@ class _LoginScreenState extends State<LoginScreen> {
                           backgroundColor: primaryBlue,
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                         ),
-                        child: const Text(
-                          'LOGIN',
-                          style: TextStyle(fontSize: 22, color: Colors.white, fontWeight: FontWeight.bold),
+                        child: Text(
+                          loginButtonText,
+                          style: const TextStyle(fontSize: 22, color: Colors.white, fontWeight: FontWeight.bold),
                         ),
                       ),
                       const SizedBox(height: 16),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text("Don't have an account? ", style: TextStyle(color: Colors.black54)),
-                          Text('Register', style: TextStyle(color: primaryBlue, fontWeight: FontWeight.bold)),
+                          Text(noAccountText, style: const TextStyle(color: Colors.black54)),
+                          Text(registerText, style: const TextStyle(color: primaryBlue, fontWeight: FontWeight.bold)),
                         ],
                       ),
                       const SizedBox(height: 8),

@@ -114,7 +114,7 @@ function App() {
           <Route path="/audit" element={<Layout><AuditLogs /></Layout>} />
           <Route path="/settings" element={<Layout><Settings /></Layout>} />
           
-          <Route path="/" element={<Navigate to="/dashboard" replace />} />
+          <Route path="/" element={<Layout><Dashboard /></Layout>} />
           <Route path="*" element={<Navigate to="/login" replace />} />
         </Routes>
       </Router>

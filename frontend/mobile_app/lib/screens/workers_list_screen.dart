@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import '../constants.dart';
 
 class WorkersListScreen extends StatefulWidget {
   const WorkersListScreen({super.key});
@@ -22,7 +23,7 @@ class _WorkersListScreenState extends State<WorkersListScreen> {
 
   Future<void> _fetchWorkers() async {
     try {
-      final response = await http.get(Uri.parse('http://192.168.0.115:3000/api/v1/users/workers'));
+      final response = await http.get(Uri.parse('${ApiConstants.baseUrl}/users/workers'));
       if (response.statusCode == 200) {
         setState(() {
           _workers = json.decode(response.body);

@@ -69,8 +69,8 @@ export default function Layout({ children }) {
           }}
         >
           <Box sx={{ p: 3, display: 'flex', alignItems: 'center', gap: 2 }}>
-            <Box sx={{ width: 40, height: 40, borderRadius: 2, bgcolor: 'primary.main', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <LocalHospital sx={{ fontSize: 24 }} />
+            <Box sx={{ width: 64, height: 64, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <img src="/logo.png" alt="Logo" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
             </Box>
             <Box>
               <Typography variant="h3" fontWeight={800} color="#0F172A">CARE ALERT</Typography>
@@ -135,7 +135,7 @@ export default function Layout({ children }) {
                 <IconButton onClick={() => setMobileMoreOpen(true)} edge="start" sx={{ mr: 1 }}>
                   <MenuIcon />
                 </IconButton>
-                <Box sx={{ width: 32, height: 32, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Box sx={{ width: 48, height: 48, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <img src="/logo.png" alt="Care Alert Logo" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                 </Box>
               </Box>
