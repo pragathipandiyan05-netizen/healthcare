@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
+import '../constants.dart';
 
 class EquipmentFaultScreen extends StatefulWidget {
   const EquipmentFaultScreen({super.key});
@@ -31,13 +35,49 @@ class _EquipmentFaultScreenState extends State<EquipmentFaultScreen> {
     'Electrical', 'Performance Failure', 'Infection-Control Concern', 'Other'
   ];
 
-  void _submitForm() {
+  void _submitForm() async {
     if (_formKey.currentState!.validate()) {
-      // Simulate submission
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Equipment Fault Reported Successfully'), backgroundColor: Colors.green),
-      );
-      Navigator.pop(context);
+      setState(() => _isInUse = _isInUse); // trigger rebuild
+      final prefs = await SharedPreferences.getInstance();
+      final staffId = prefs.getString('staff_id') ?? 'UNKNOWN';
+
+      try {
+        final response = await http.post(
+          Uri.parse('${ApiConstants.baseUrl}/reports/equipment-fault'),
+          headers: {'Content-Type': 'application/json'},
+          body: json.encode({
+            'staff_id': staffId,
+            'category': _selectedCategory,
+            'equipment_name': _nameController.text,
+            'asset_id': _assetIdController.text,
+            'location': _hospitalController.text,
+            'ward': _wardController.text,
+            'fault_type': _selectedFaultType,
+            'safety_impact': _safetyImpact,
+            'description': _descriptionController.text,
+            'is_in_use': _isInUse,
+            'priority': _priority,
+          }),
+        );
+
+        if (!mounted) return;
+
+        if (response.statusCode == 200) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Equipment Fault Reported Successfully'), backgroundColor: Colors.green),
+          );
+          Navigator.pop(context);
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Submission failed (${response.statusCode})'), backgroundColor: Colors.red),
+          );
+        }
+      } catch (e) {
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Cannot connect to server. Check network.'), backgroundColor: Colors.red),
+        );
+      }
     }
   }
 

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import '../constants.dart';
 import 'dashboard_screen.dart';
 import 'security/security_dashboard_screen.dart';
 
@@ -15,46 +18,74 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _passwordController = TextEditingController();
   bool isEnglish = true;
   bool _obscurePassword = true;
+  bool _isLoading = false;
 
   void _login() async {
     final email = _staffIdController.text.trim().toLowerCase();
     final password = _passwordController.text;
 
-    if (email == 'staff@gmail.com' && password == 'password') {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString('staff_id', email.isNotEmpty ? email : 'STAFF-1234');
-      await prefs.setString('role', 'Staff (Doctor/Nurse)');
-
-      if (!mounted) return;
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const DashboardScreen()),
-      );
-    } else if (email == 'security@gmail.com' && password == 'password') {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString('staff_id', email);
-      await prefs.setString('role', 'SECURITY_STAFF');
-
-      if (!mounted) return;
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const SecurityDashboardScreen()),
-      );
-    } else if (email == 'supervisor@gmail.com' && password == 'password') {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString('staff_id', email);
-      await prefs.setString('role', 'SECURITY_SUPERVISOR');
-
-      if (!mounted) return;
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const SecurityDashboardScreen()),
-      );
-    } else {
+    if (email.isEmpty || password.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Invalid credentials. Try staff@, security@, or supervisor@ with password'),
+          content: Text('Please enter email and password'),
+          backgroundColor: Colors.orange,
+        ),
+      );
+      return;
+    }
+
+    setState(() => _isLoading = true);
+
+    try {
+      final response = await http.post(
+        Uri.parse('${ApiConstants.baseUrl}/auth/login'),
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode({'email': email, 'password': password}),
+      );
+
+      if (!mounted) return;
+      setState(() => _isLoading = false);
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        final role = data['role'] as String;
+        final name = data['name'] as String? ?? email;
+
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString('staff_id', email);
+        await prefs.setString('role', role);
+        await prefs.setString('name', name);
+
+        if (!mounted) return;
+
+        if (role == 'SECURITY_STAFF' || role == 'SECURITY_SUPERVISOR') {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const SecurityDashboardScreen()),
+          );
+        } else {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const DashboardScreen()),
+          );
+        }
+      } else {
+        final data = json.decode(response.body);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(data['error'] ?? 'Login failed. Please try again.'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } catch (e) {
+      if (!mounted) return;
+      setState(() => _isLoading = false);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Cannot connect to server. Check your network.\n$e'),
           backgroundColor: Colors.red,
+          duration: const Duration(seconds: 4),
         ),
       );
     }
@@ -179,6 +210,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       const SizedBox(height: 8),
                       TextField(
                         controller: _staffIdController,
+                        keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
                           labelText: emailLabel,
                           border: OutlineInputBorder(
@@ -204,7 +236,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               });
                             },
                             child: Container(
-                              color: Colors.transparent, // Ensures the tap area covers the icon cleanly
+                              color: Colors.transparent,
                               child: Icon(
                                 _obscurePassword ? Icons.visibility_off : Icons.visibility,
                                 color: Colors.grey,
@@ -231,16 +263,22 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       const SizedBox(height: 8),
                       ElevatedButton(
-                        onPressed: _login,
+                        onPressed: _isLoading ? null : _login,
                         style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(vertical: 16),
                           backgroundColor: primaryBlue,
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                         ),
-                        child: Text(
-                          loginButtonText,
-                          style: const TextStyle(fontSize: 22, color: Colors.white, fontWeight: FontWeight.bold),
-                        ),
+                        child: _isLoading
+                            ? const SizedBox(
+                                height: 24,
+                                width: 24,
+                                child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
+                              )
+                            : Text(
+                                loginButtonText,
+                                style: const TextStyle(fontSize: 22, color: Colors.white, fontWeight: FontWeight.bold),
+                              ),
                       ),
                       const SizedBox(height: 16),
                       Row(

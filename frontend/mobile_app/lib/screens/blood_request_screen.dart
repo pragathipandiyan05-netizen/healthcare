@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
+import '../constants.dart';
 
 class BloodRequestScreen extends StatefulWidget {
   const BloodRequestScreen({super.key});
@@ -9,6 +13,54 @@ class BloodRequestScreen extends StatefulWidget {
 
 class _BloodRequestScreenState extends State<BloodRequestScreen> {
   String _urgency = 'High';
+  bool _isSubmitting = false;
+
+  String _selectedBloodGroup = 'O Positive (O+)';
+  String _selectedComponent = 'Packed RBC';
+  final TextEditingController _unitsController = TextEditingController(text: '2 Units');
+  final TextEditingController _notesController = TextEditingController(text: 'Urgently required in ICU');
+
+  Future<void> _submitRequest() async {
+    setState(() => _isSubmitting = true);
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final staffId = prefs.getString('staff_id') ?? 'UNKNOWN';
+
+      final response = await http.post(
+        Uri.parse('${ApiConstants.baseUrl}/reports/blood-request'),
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode({
+          'staff_id': staffId,
+          'blood_group': _selectedBloodGroup,
+          'component': _selectedComponent,
+          'units_required': _unitsController.text,
+          'urgency': _urgency,
+          'notes': _notesController.text,
+        }),
+      );
+
+      if (!mounted) return;
+      setState(() => _isSubmitting = false);
+
+      if (response.statusCode == 200) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Blood Request Submitted Successfully!'), backgroundColor: Colors.green),
+        );
+        Navigator.pop(context);
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Submission failed (${response.statusCode})'), backgroundColor: Colors.red),
+        );
+      }
+    } catch (e) {
+      if (!mounted) return;
+      setState(() => _isSubmitting = false);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Cannot connect to server. Check network.'), backgroundColor: Colors.red),
+      );
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -58,16 +110,15 @@ class _BloodRequestScreenState extends State<BloodRequestScreen> {
               const SizedBox(height: 40),
 
               ElevatedButton(
-                onPressed: () {
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Blood Request Submitted!')));
-                  Navigator.pop(context);
-                },
+                onPressed: _isSubmitting ? null : _submitRequest,
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   backgroundColor: primaryBlue,
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                 ),
-                child: const Text('SUBMIT REQUEST', style: TextStyle(fontSize: 22, color: Colors.white, fontWeight: FontWeight.bold)),
+                child: _isSubmitting
+                    ? const SizedBox(height: 24, width: 24, child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2))
+                    : const Text('SUBMIT REQUEST', style: TextStyle(fontSize: 22, color: Colors.white, fontWeight: FontWeight.bold)),
               ),
               const SizedBox(height: 20),
             ],
