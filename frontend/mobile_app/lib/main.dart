@@ -4,8 +4,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'screens/login_screen.dart';
 import 'screens/dashboard_screen.dart';
-import 'screens/admin_dashboard.dart';
 import 'package:flutter/gestures.dart';
+import 'screens/security/security_dashboard_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,16 +19,13 @@ void main() async {
     debugPrint('Firebase initialization error: $e');
   }
   
-  // Basic session check
+  // BYPASS LOGIN ENTIRELY for the mentor demo
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  String? role = prefs.getString('role');
+  await prefs.setString('staff_id', 'demo_sec_01');
+  await prefs.setString('role', 'SECURITY_SUPERVISOR');
+  await prefs.setString('name', 'Demo Security Officer');
   
-  Widget initialScreen = LoginScreen();
-  if (role == 'Admin / Security') {
-    initialScreen = AdminDashboard();
-  } else if (role == 'Staff (Doctor/Nurse)') {
-    initialScreen = DashboardScreen();
-  }
+  Widget initialScreen = const SecurityDashboardScreen();
 
   runApp(CareAlertApp(initialScreen: initialScreen));
 }
