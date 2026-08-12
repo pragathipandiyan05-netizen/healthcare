@@ -223,13 +223,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: const [
-                            Text('Welcome', style: TextStyle(color: Colors.white70, fontSize: 16)),
-                            Text('Dr. Kavitha R', style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold)),
+                            Text('Welcome', style: TextStyle(color: Colors.white70, fontSize: 13)),
+                            Text('Dr. Kavitha R', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)),
                           ],
                         ),
                       ),
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                         decoration: BoxDecoration(
                           color: Colors.green.withValues(alpha: 0.2),
                           borderRadius: BorderRadius.circular(20),
@@ -238,49 +238,49 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         child: const Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Icon(Icons.circle, color: Colors.greenAccent, size: 12),
-                            SizedBox(width: 6),
-                            Text('On Duty', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                            Icon(Icons.circle, color: Colors.greenAccent, size: 10),
+                            SizedBox(width: 4),
+                            Text('On Duty', style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold)),
                           ],
                         ),
                       )
                     ],
                   ),
-                  const SizedBox(height: 12),
-                  const Text('Emergency Ward', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w500)),
-                  const Text('Government General Hospital, Chennai', style: TextStyle(color: Colors.white70, fontSize: 14)),
+                  const SizedBox(height: 8),
+                  const Text('Emergency Ward', style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w500)),
+                  const Text('Government General Hospital, Chennai', style: TextStyle(color: Colors.white70, fontSize: 12)),
                 ],
               ),
             ),
             
             Padding(
-              padding: const EdgeInsets.all(24.0),
+              padding: const EdgeInsets.all(16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Huge SOS Button
+                  // Scaled SOS Button
                   Center(
                     child: GestureDetector(
                       onLongPress: () => sendSOS(context),
                       onTap: () { ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Press and hold to activate SOS'))); },
                       child: Container(
-                        width: 220,
-                        height: 220,
+                        width: 160,
+                        height: 160,
                         decoration: BoxDecoration(
                           color: Colors.red,
                           shape: BoxShape.circle,
                           boxShadow: [
-                            BoxShadow(color: Colors.red.withValues(alpha: 0.3), blurRadius: 20, spreadRadius: 5),
+                            BoxShadow(color: Colors.red.withValues(alpha: 0.3), blurRadius: 16, spreadRadius: 4),
                           ],
                         ),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: const [
-                            Icon(Icons.health_and_safety, color: Colors.white, size: 48),
+                            Icon(Icons.health_and_safety, color: Colors.white, size: 36),
+                            SizedBox(height: 6),
+                            Text('EMERGENCY\nSOS', textAlign: TextAlign.center, style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold, letterSpacing: 1.2, height: 1.1)),
                             SizedBox(height: 8),
-                            Text('EMERGENCY\nSOS', textAlign: TextAlign.center, style: TextStyle(color: Colors.white, fontSize: 28, fontWeight: FontWeight.bold, letterSpacing: 1.5, height: 1.2)),
-                            SizedBox(height: 12),
-                            Text('[ PRESS & HOLD ]', style: TextStyle(color: Colors.white70, fontSize: 16, fontWeight: FontWeight.w600)),
+                            Text('[ PRESS & HOLD ]', style: TextStyle(color: Colors.white70, fontSize: 12, fontWeight: FontWeight.w600)),
                           ],
                         ),
                       ),

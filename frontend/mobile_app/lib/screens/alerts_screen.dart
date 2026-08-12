@@ -55,14 +55,18 @@ class _AlertsScreenState extends State<AlertsScreen> {
       final response = await http.put(Uri.parse('${ApiConstants.baseUrl}/alerts/$id/resolve'));
       if (response.statusCode == 200) {
         _fetchAlerts(); // Refresh list
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Alert Resolved'), backgroundColor: Colors.green),
-        );
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Alert Resolved'), backgroundColor: Colors.green),
+          );
+        }
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Failed to resolve alert'), backgroundColor: Colors.red),
-      );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Failed to resolve alert'), backgroundColor: Colors.red),
+        );
+      }
     }
   }
 

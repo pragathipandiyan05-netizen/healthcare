@@ -5,6 +5,7 @@ import 'dart:convert';
 import '../constants.dart';
 import 'dashboard_screen.dart';
 import 'security/security_dashboard_screen.dart';
+import 'role_root_navigator.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -58,17 +59,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
         if (!mounted) return;
 
-        if (role == 'SECURITY_STAFF' || role == 'SECURITY_SUPERVISOR') {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => const SecurityDashboardScreen()),
-          );
-        } else {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => const DashboardScreen()),
-          );
-        }
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const RoleRootNavigator()),
+        );
       } else {
         final data = json.decode(response.body);
         ScaffoldMessenger.of(context).showSnackBar(
@@ -94,29 +88,24 @@ class _LoginScreenState extends State<LoginScreen> {
 
       SharedPreferences prefs = await SharedPreferences.getInstance();
       
-      if (email.contains('security') || email.contains('supervisor')) {
-        await prefs.setString('staff_id', 'demo_sec_01');
-        await prefs.setString('role', 'SECURITY_SUPERVISOR');
-        await prefs.setString('name', 'Demo Security Officer');
-        Future.delayed(const Duration(seconds: 1), () {
-          if (!mounted) return;
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => const SecurityDashboardScreen()),
-          );
-        });
-      } else {
-        await prefs.setString('staff_id', 'demo_staff_01');
-        await prefs.setString('role', 'MEDICAL_STAFF');
-        await prefs.setString('name', 'Demo Doctor');
-        Future.delayed(const Duration(seconds: 1), () {
-          if (!mounted) return;
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => const DashboardScreen()),
-          );
-        });
-      }
+      String role = 'DOCTOR';
+      if (email.contains('nurse')) role = 'NURSE';
+      else if (email.contains('supervisor')) role = 'SECURITY_SUPERVISOR';
+      else if (email.contains('security')) role = 'SECURITY_STAFF';
+      else if (email.contains('hod')) role = 'DEPARTMENT_HEAD';
+      else if (email.contains('admin')) role = 'HOSPITAL_ADMIN';
+      else if (email.contains('superintendent')) role = 'MEDICAL_SUPERINTENDENT';
+      else if (email.contains('superadmin')) role = 'SUPER_ADMIN';
+
+      await prefs.setString('staff_id', email);
+      await prefs.setString('role', role);
+      await prefs.setString('name', email.split('@').first.toUpperCase());
+
+      if (!mounted) return;
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const RoleRootNavigator()),
+      );
     }
   }
 
@@ -164,20 +153,20 @@ class _LoginScreenState extends State<LoginScreen> {
                     titleText,
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 30,
+                      fontSize: 22,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
-                      letterSpacing: 1.5,
+                      letterSpacing: 1.2,
                     ),
                   ),
                   Text(
                     subtitleText,
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: 13,
                       color: Colors.white70,
                       fontWeight: FontWeight.w600,
-                      letterSpacing: 2,
+                      letterSpacing: 1.5,
                     ),
                   ),
                   SizedBox(height: isKeyboardOpen ? 12 : 24),
